@@ -1669,10 +1669,13 @@ body::before {
 }
 
 .cube-wrap {
-  width: 390px;
-  height: 390px;
-  right: -18px;
-  opacity: .75;
+  position: relative;
+  width: 360px;
+  height: 360px;
+  right: auto;
+  top: auto;
+  opacity: .9;
+  margin: 0 auto;
 }
 
 .cube,
@@ -1703,6 +1706,333 @@ body::before {
 .cube-ring.two { display: block; width: 218px; height: 218px; }
 
 .caption { color: rgba(255,255,255,.32); }
+
+.geometry-section {
+  position: relative;
+  min-height: 78vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-top-color: var(--line);
+}
+
+.geometry-stage {
+  position: relative;
+  width: min(820px, 100%);
+  height: min(620px, 72vh);
+  display: grid;
+  place-items: center;
+  perspective: 1100px;
+  transform-style: preserve-3d;
+  transition: transform .14s linear;
+}
+
+.geometry-stage::before {
+  content: "";
+  position: absolute;
+  width: 72%;
+  height: 72%;
+  border: 1px solid rgba(0,255,224,.12);
+  border-radius: 50%;
+  transform: rotateX(68deg);
+}
+
+.geometry-stage::after {
+  content: "";
+  position: absolute;
+  width: 55%;
+  height: 55%;
+  border: 1px solid rgba(191,95,255,.12);
+  border-radius: 50%;
+  transform: rotateY(68deg) rotateX(22deg);
+}
+
+.geometry-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0,255,224,.11);
+}
+
+.geometry-ring.one {
+  width: 84%;
+  height: 84%;
+  transform: rotateX(73deg) rotateZ(-18deg);
+}
+
+.geometry-ring.two {
+  width: 66%;
+  height: 66%;
+  border-color: rgba(191,95,255,.12);
+  transform: rotateY(67deg) rotateZ(23deg);
+}
+
+.geometry-ring.three {
+  width: 48%;
+  height: 48%;
+  border-color: rgba(255,255,255,.11);
+  transform: rotateX(72deg) rotateY(32deg) rotateZ(-34deg);
+}
+
+.solar-system {
+  position: absolute;
+  width: 64%;
+  height: 64%;
+  transform-style: preserve-3d;
+  transform: rotateX(67deg) rotateZ(-18deg);
+  pointer-events: none;
+}
+
+.solar-orbit {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(35,110,255,.15);
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  transform-origin: center;
+  animation: orbitPlaneOne 18s linear infinite;
+}
+
+.solar-orbit:nth-child(2) {
+  inset: 8%;
+  border-color: rgba(255,63,93,.15);
+  transform: rotateY(58deg);
+  animation: orbitPlaneTwo 23s linear infinite reverse;
+}
+
+.solar-orbit:nth-child(3) {
+  inset: 17%;
+  border-color: rgba(35,110,255,.12);
+  transform: rotateX(61deg);
+  animation: orbitPlaneThree 29s linear infinite;
+}
+
+.solar-orbit:nth-child(4) {
+  inset: 26%;
+  border-color: rgba(255,63,93,.11);
+  transform: rotateY(37deg) rotateX(34deg);
+  animation: orbitPlaneFour 16s linear infinite reverse;
+}
+
+.satellite {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform-style: preserve-3d;
+  transform-origin: center;
+  animation: orbitSpinOne 11s linear infinite;
+}
+
+.satellite:nth-child(6) { animation: orbitSpinTwo 15s linear infinite reverse; }
+.satellite:nth-child(7) { animation: orbitSpinThree 19s linear infinite; animation-delay: -4s; }
+.satellite:nth-child(8) { animation: orbitSpinFour 13s linear infinite reverse; animation-delay: -7s; }
+
+.satellite::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: -6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(35,110,255,.48);
+  background: rgba(35,110,255,.06);
+  box-shadow: 0 0 18px rgba(35,110,255,.15);
+}
+
+.satellite:nth-child(6)::before,
+.satellite:nth-child(8)::before {
+  border-color: rgba(255,63,93,.45);
+  background: rgba(255,63,93,.05);
+  box-shadow: 0 0 18px rgba(255,63,93,.14);
+}
+
+.satellite:nth-child(5)::before { width: 16px; height: 16px; left: -8px; top: -8px; }
+
+@keyframes orbitSpinOne {
+  from { transform: rotateZ(0deg) rotateX(8deg); }
+  to { transform: rotateZ(360deg) rotateX(8deg); }
+}
+
+@keyframes orbitSpinTwo {
+  from { transform: rotateY(0deg) rotateZ(18deg) rotateX(14deg); }
+  to { transform: rotateY(360deg) rotateZ(18deg) rotateX(14deg); }
+}
+
+@keyframes orbitSpinThree {
+  from { transform: rotateX(0deg) rotateZ(-24deg) rotateY(11deg); }
+  to { transform: rotateX(360deg) rotateZ(-24deg) rotateY(11deg); }
+}
+
+@keyframes orbitSpinFour {
+  from { transform: rotateY(0deg) rotateX(38deg) rotateZ(42deg); }
+  to { transform: rotateY(360deg) rotateX(38deg) rotateZ(42deg); }
+}
+
+@keyframes orbitPlaneOne {
+  from { transform: rotateX(72deg) rotateY(0deg) rotateZ(0deg); }
+  to { transform: rotateX(72deg) rotateY(360deg) rotateZ(24deg); }
+}
+
+@keyframes orbitPlaneTwo {
+  from { transform: rotateY(58deg) rotateZ(0deg); }
+  to { transform: rotateY(418deg) rotateZ(-32deg); }
+}
+
+@keyframes orbitPlaneThree {
+  from { transform: rotateX(61deg) rotateZ(0deg); }
+  to { transform: rotateX(421deg) rotateZ(28deg); }
+}
+
+@keyframes orbitPlaneFour {
+  from { transform: rotateY(37deg) rotateX(34deg) rotateZ(0deg); }
+  to { transform: rotateY(397deg) rotateX(394deg) rotateZ(-24deg); }
+}
+
+.geometry-grid {
+  position: absolute;
+  width: 92%;
+  height: 58%;
+  bottom: 3%;
+  background-image:
+    linear-gradient(rgba(0,255,224,.065) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,224,.065) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: .28;
+  transform: perspective(900px) rotateX(66deg) rotateZ(-5deg);
+  transform-origin: center bottom;
+}
+
+.geometry-label {
+  position: absolute;
+  left: 4%;
+  top: 8%;
+  color: rgba(255,255,255,.28);
+  font-size: 9px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.geometry-label.right {
+  left: auto;
+  right: 4%;
+  top: auto;
+  bottom: 10%;
+}
+
+.geometry-copy {
+  position: absolute;
+  left: 8%;
+  bottom: 8%;
+  max-width: 290px;
+  color: rgba(255,255,255,.34);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.geometry-cube {
+  position: relative;
+  width: 190px;
+  height: 190px;
+  transform-style: preserve-3d;
+  transform: rotateX(-22deg) rotateY(32deg);
+  animation: turnBig 18s linear infinite;
+  filter: drop-shadow(0 0 24px rgba(35,110,255,.08));
+}
+
+.geometry-cube .face {
+  border-color: rgba(0,255,224,.42);
+  background: rgba(0,255,224,.022);
+  box-shadow:
+    inset 0 0 38px rgba(0,255,224,.045),
+    0 0 24px rgba(0,255,224,.045);
+}
+
+.geometry-cube .front { transform: translateZ(90px); }
+.geometry-cube .back { transform: rotateY(180deg) translateZ(90px); }
+.geometry-cube .left { transform: rotateY(-90deg) translateZ(90px); }
+.geometry-cube .right { transform: rotateY(90deg) translateZ(90px); }
+.geometry-cube .top { transform: rotateX(90deg) translateZ(90px); }
+.geometry-cube .bottom { transform: rotateX(-90deg) translateZ(90px); }
+
+.cube-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 92px;
+  height: 92px;
+  margin: -46px;
+  transform-style: preserve-3d;
+  animation: coreTurn 11s linear infinite reverse;
+}
+
+.cube-core .core-face {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255,63,93,.28);
+  background: rgba(255,63,93,.018);
+  box-shadow: inset 0 0 24px rgba(255,63,93,.035);
+}
+
+.cube-core .core-front  { transform: translateZ(46px); }
+.cube-core .core-back   { transform: rotateY(180deg) translateZ(46px); }
+.cube-core .core-left   { transform: rotateY(-90deg) translateZ(46px); }
+.cube-core .core-right  { transform: rotateY(90deg) translateZ(46px); }
+.cube-core .core-top    { transform: rotateX(90deg) translateZ(46px); }
+.cube-core .core-bottom { transform: rotateX(-90deg) translateZ(46px); }
+
+.cube-ghost {
+  position: absolute;
+  width: 244px;
+  height: 244px;
+  border: 1px solid rgba(35,110,255,.11);
+  transform-style: preserve-3d;
+  transform: rotateX(72deg) rotateY(18deg) rotateZ(45deg);
+  animation: ghostTurn 26s linear infinite;
+}
+
+.cube-ghost::before,
+.cube-ghost::after {
+  content: "";
+  position: absolute;
+  inset: 13%;
+  border: 1px solid rgba(255,63,93,.08);
+  transform: rotate(90deg);
+}
+
+.cube-ghost::after {
+  inset: 28%;
+  border-color: rgba(35,110,255,.08);
+  transform: rotate(45deg);
+}
+
+@keyframes coreTurn {
+  from { transform: rotateX(18deg) rotateY(0deg) rotateZ(0deg); }
+  to { transform: rotateX(198deg) rotateY(360deg) rotateZ(8deg); }
+}
+
+@keyframes ghostTurn {
+  to { transform: rotateX(432deg) rotateY(-52deg) rotateZ(405deg); }
+}
+
+@keyframes turnBig {
+  from { transform: rotateX(-22deg) rotateY(32deg) rotateZ(0deg); }
+  to { transform: rotateX(-22deg) rotateY(392deg) rotateZ(6deg); }
+}
+
+@media (max-width: 700px) {
+  .geometry-section { min-height: 62vh; }
+  .geometry-stage { height: 55vh; min-height: 420px; }
+  .geometry-cube { width: 125px; height: 125px; }
+  .geometry-cube .front { transform: translateZ(62.5px); }
+  .geometry-cube .back { transform: rotateY(180deg) translateZ(62.5px); }
+  .geometry-cube .left { transform: rotateY(-90deg) translateZ(62.5px); }
+  .geometry-cube .right { transform: rotateY(90deg) translateZ(62.5px); }
+  .geometry-cube .top { transform: rotateX(90deg) translateZ(62.5px); }
+  .geometry-cube .bottom { transform: rotateX(-90deg) translateZ(62.5px); }
+  .geometry-copy { left: 5%; bottom: 5%; }
+}
 
 .section {
   padding: 88px 0;
@@ -2956,6 +3286,12 @@ footer {
     opacity: 1;
     transform: none;
   }
+  .geometry-cube,
+  .cube-core,
+  .cube-ghost,
+  .satellite {
+    animation: none !important;
+  }
 }
 </style>
 </head>
@@ -3005,18 +3341,6 @@ footer {
       </div>
 
       <div class="portrait-stage reveal">
-        <div class="cube-wrap" aria-hidden="true">
-          <div class="cube-ring one"></div>
-          <div class="cube-ring two"></div>
-          <div class="cube">
-            <div class="face front"></div>
-            <div class="face back"></div>
-            <div class="face left"></div>
-            <div class="face right"></div>
-            <div class="face top"></div>
-            <div class="face bottom"></div>
-          </div>
-        </div>
         <div class="portrait-frame">
           <img class="portrait-image" src="assets/profile.jpg" alt="Mohammed Shawqi Aftab" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
           <div class="portrait-placeholder" style="display:none;"></div>
@@ -3155,6 +3479,45 @@ footer {
         </div>
       </div>
     </section>
+
+    <section class="section geometry-section" aria-hidden="true">
+      <div class="geometry-stage">
+        <div class="geometry-ring one"></div>
+        <div class="geometry-ring two"></div>
+        <div class="geometry-ring three"></div>
+        <div class="geometry-grid"></div>
+        <div class="solar-system">
+          <div class="solar-orbit"></div>
+          <div class="solar-orbit"></div>
+          <div class="solar-orbit"></div>
+          <div class="solar-orbit"></div>
+          <div class="satellite"></div>
+          <div class="satellite"></div>
+          <div class="satellite"></div>
+          <div class="satellite"></div>
+        </div>
+        <div class="geometry-label">signal / structure / motion</div>
+        <div class="geometry-label right">scroll</div>
+        <div class="geometry-copy">Not everything on this page needs to explain itself.</div>
+        <div class="cube-ghost"></div>
+        <div class="geometry-cube">
+          <div class="face front"></div>
+          <div class="face back"></div>
+          <div class="face left"></div>
+          <div class="face right"></div>
+          <div class="face top"></div>
+          <div class="face bottom"></div>
+          <div class="cube-core">
+            <div class="core-face core-front"></div>
+            <div class="core-face core-back"></div>
+            <div class="core-face core-left"></div>
+            <div class="core-face core-right"></div>
+            <div class="core-face core-top"></div>
+            <div class="core-face core-bottom"></div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -3181,14 +3544,34 @@ footer {
   const orbit = document.querySelector('.geometry-field .orbit');
   const diamond = document.querySelector('.geometry-field .diamond');
   const grid = document.querySelector('.geometry-field .grid');
+  const geometryStage = document.querySelector('.geometry-stage');
+  const geometryCube = document.querySelector('.geometry-cube');
+  const geometryRingOne = document.querySelector('.geometry-ring.one');
+  const geometryRingTwo = document.querySelector('.geometry-ring.two');
+  const geometryRingThree = document.querySelector('.geometry-ring.three');
+  const solarSystem = document.querySelector('.solar-system');
+  const cubeGhost = document.querySelector('.cube-ghost');
   let ticking = false;
 
   const updateGeometry = () => {
     const y = window.scrollY;
-    orbit.style.transform = 'translate3d(-50%, -50%, 0) rotate(' + (18 + y * 0.018) + 'deg) scale(' + (1 + Math.min(y / 14000, .11)) + ')';
-    diamond.style.transform = 'translate3d(0, ' + (y * -0.055) + 'px, 0) rotate(' + (45 + y * 0.028) + 'deg)';
-    grid.style.transform = 'perspective(650px) translate3d(0, ' + (y * -0.09) + 'px, 0) rotateX(61deg) rotateZ(-12deg)';
-    geometry.style.opacity = String(Math.max(.34, .72 - y / 9000));
+    if (orbit) orbit.style.transform = 'translate3d(-50%, -50%, 0) rotate(' + (18 + y * 0.018) + 'deg) scale(' + (1 + Math.min(y / 14000, .11)) + ')';
+    if (diamond) diamond.style.transform = 'translate3d(0, ' + (y * -0.055) + 'px, 0) rotate(' + (45 + y * 0.028) + 'deg)';
+    if (grid) grid.style.transform = 'perspective(650px) translate3d(0, ' + (y * -0.09) + 'px, 0) rotateX(61deg) rotateZ(-12deg)';
+    if (geometry) geometry.style.opacity = String(Math.max(.34, .72 - y / 9000));
+    if (geometryStage) {
+      const rect = geometryStage.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const viewport = window.innerHeight / 2;
+      const offset = (center - viewport) / window.innerHeight;
+      geometryStage.style.transform = 'translate3d(0,' + (-offset * 46) + 'px,0) rotateX(' + (offset * 3) + 'deg)';
+      geometryCube.style.transform = 'rotateX(' + (-22 + offset * 34) + 'deg) rotateY(' + (32 - offset * 110) + 'deg) rotateZ(' + (offset * 24) + 'deg)';
+      geometryRingOne.style.transform = 'translate3d(0,' + (offset * -34) + 'px,0) rotateX(' + (73 + offset * 18) + 'deg) rotateZ(' + (-18 + offset * 22) + 'deg)';
+      geometryRingTwo.style.transform = 'translate3d(0,' + (offset * 52) + 'px,0) rotateY(' + (67 - offset * 28) + 'deg) rotateZ(' + (23 + offset * 35) + 'deg)';
+      geometryRingThree.style.transform = 'translate3d(0,' + (offset * -68) + 'px,0) rotateX(' + (72 - offset * 24) + 'deg) rotateY(' + (32 + offset * 40) + 'deg) rotateZ(' + (-34 - offset * 30) + 'deg)';
+      solarSystem.style.transform = 'rotateX(' + (67 + offset * 18) + 'deg) rotateZ(' + (-18 + offset * 54) + 'deg) translate3d(0,' + (offset * 28) + 'px,0)';
+      cubeGhost.style.transform = 'translate3d(' + (offset * -42) + 'px,' + (offset * 24) + 'px,0) rotateX(' + (72 + offset * 40) + 'deg) rotateY(' + (18 - offset * 80) + 'deg) rotateZ(' + (45 + offset * 55) + 'deg)';
+    }
     ticking = false;
   };
 
