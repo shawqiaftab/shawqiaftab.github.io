@@ -4072,6 +4072,17 @@ footer {
 .global-ripple.r7 { border-color: rgba(103, 219, 255, .09); }
 .global-ripple.r8 { border-color: rgba(170, 164, 255, .08); }
 
+.global-ripple.red {
+  border-color: rgba(255, 74, 108, .22);
+  box-shadow:
+    0 0 24px rgba(255, 72, 108, .07),
+    inset 0 0 16px rgba(255, 105, 130, .035);
+}
+
+.global-ripple.red::after {
+  border-color: rgba(255, 104, 135, .16);
+}
+
 @keyframes globalRipple {
   0% {
     transform: translate(-50%, -50%) scale(.18) rotate(var(--rr));
@@ -4423,11 +4434,23 @@ footer {
     let lastWaterY = -9999;
     let lastSpawnX = -9999;
     let lastSpawnY = -9999;
+    let redRippleTimer;
 
-    const spawnWaterRipple = (x, y, strength = 1) => {
+    const scheduleRedRipple = () => {
+      clearTimeout(redRippleTimer);
+      redRippleTimer = setTimeout(() => {
+        spawnWaterRipple(Math.random() * window.innerWidth, Math.random() * window.innerHeight, .65, true);
+      }, 5000);
+    };
+
+    const spawnWaterRipple = (x, y, strength = 1, forceRed = false) => {
       const ripple = document.createElement('span');
       const size = 110 + Math.random() * 110;
       ripple.className = 'global-ripple pointer-ripple';
+      if (forceRed || Math.random() < .07) {
+        ripple.classList.add('red');
+        scheduleRedRipple();
+      }
       ripple.style.setProperty('--rx', x + 'px');
       ripple.style.setProperty('--ry', y + 'px');
       ripple.style.setProperty('--rw', (size * (1.8 + Math.random() * .7)) + 'px');
@@ -4441,6 +4464,8 @@ footer {
       lastSpawnX = x;
       lastSpawnY = y;
     };
+
+    scheduleRedRipple();
 
     document.addEventListener('pointerdown', (event) => {
       spawnWaterRipple(event.clientX, event.clientY, 1.25);
